@@ -1,5 +1,7 @@
 from azureml.core import Workspace, Datastore
 from azureml.core.authentication import ServicePrincipalAuthentication
+from azureml.core.compute import ComputeTarget, AmlCompute
+from azureml.exceptions import ComputeTargetException
 
 class AMLInterface:
     def __init__(self, tenant_id, spn_id, spn_password, subscription_id,
@@ -28,3 +30,28 @@ class AMLInterface:
     
     def register_aml_environment(self, environment):
         environment.register(workspace=self.ws)
+    
+    def get_compute_target(self, compute_name, vm_size, max_nodes):
+        try:
+            compute_target = ComputeTarget(
+                workspace=self.ws,
+                name=compute_name
+            )
+            print('Found existing compute target')
+        except ComputeTargetException:
+            print('Creating a new compute target...')
+            compute_config = AmlCompute.provisioning_configuration(
+                vm_size='STANDARD_D2_V2',
+                min_nodes=1,
+                max_nodes=2
+            )
+            compute_target = ComputeTarget.create(
+                self.ws,
+                compute_name, 
+                compute_config
+            )
+            compute_target.wait_for_completion(
+                show_output=True, 
+                timeout_in_minutes=20
+            )
+        return compute_target
