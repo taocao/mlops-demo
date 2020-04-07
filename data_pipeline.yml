@@ -1,8 +1,9 @@
 trigger:
-  branches:
+  - cron: "0 0 * * *"
+    displayName: "Daily midnight data pipeline run"
+    branches:
       include:
-        - 'master'
-        - 'releases/*'
+      - master
 
 name: 'data_pipeline'
 jobs:

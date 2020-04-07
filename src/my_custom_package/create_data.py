@@ -40,7 +40,7 @@ class CreateClassificationData():
             TRAINING_CONTAINER,
             'train/X_train.csv'
         )
-        blob_storage_interface.upload_df_to_azure_blob(
+        blob_storage_interface.upload_df_to_blob(
             self.y_train,
             TRAINING_CONTAINER,
             'train/y_train.csv'
@@ -54,7 +54,7 @@ class CreateClassificationData():
             TRAINING_CONTAINER,
             'test/X_test.csv'
         )
-        blob_storage_interface.upload_df_to_azure_blob(
+        blob_storage_interface.upload_df_to_blob(
             self.y_test,
             TRAINING_CONTAINER,
             'test/y_test.csv'
@@ -67,7 +67,7 @@ class CreateClassificationData():
             SCORING_CONTAINER,
             'test/X_valid.csv'
         )
-        blob_storage_interface.upload_df_to_azure_blob(
+        blob_storage_interface.upload_df_to_blob(
             self.y_valid,
             SCORING_CONTAINER,
             'test/y_valid.csv'
