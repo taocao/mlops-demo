@@ -1,5 +1,6 @@
-from io import BytesIO
+from io import BytesIO, StringIO
 
+import pandas as pd
 from azure.core.exceptions import ResourceExistsError
 from azure.storage.blob import BlobServiceClient
 
@@ -37,3 +38,13 @@ class BlobStorageInterface:
             blob_client.upload_blob(
                 df.to_csv(index=False, header=True).encode()
             )
+    
+    def download_blob_to_df(self, container_name, remote_path):
+        blob_client = self.blob_service_client.get_blob_client(
+            container=container_name,
+            blob=remote_path
+        )
+        stream = blob_client.download_blob()
+        buffer = StringIO(stream.content_as_text())
+        df = pd.read_csv(buffer)
+        return df
