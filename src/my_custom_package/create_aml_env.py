@@ -28,6 +28,7 @@ def retrieve_whl_filepath():
 def create_aml_environment(aml_interface):
     aml_env = Environment(name=AML_ENV_NAME)
     conda_dep = CondaDependencies()
+    conda_dep.add_pip_package("numpy==1.18.2")
     conda_dep.add_pip_package("pandas==1.0.3")
     conda_dep.add_pip_package("scikit-learn==0.22.2.post1")
     conda_dep.add_pip_package("joblib==0.14.1")
