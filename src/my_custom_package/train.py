@@ -50,18 +50,19 @@ def evaluate_model(classifier, X_test, y_test, run):
 
 def save_model(classifer):
     output_dir = os.path.join(__here__, 'outputs')
-    os.makedirs(output_dir, exist_ok=True)
+    os.makedirs('outputs', exist_ok=True)
     model_path = os.path.join(output_dir, 'model.pkl')
     joblib.dump(classifer, model_path)
     return model_path
 
 
 def register_model(run, model_path):
-    run.register_model(
+    run.upload_file(model_path, "outputs/model.pkl")
+    model = run.register_model(
         model_name=MODEL_NAME,
-        model_path=model_path
+        model_path="outputs/model.pkl"
     )
-    run.log('Model_ID', run.model_id)
+    run.log('Model_ID', model.id)
 
 
 def main():
