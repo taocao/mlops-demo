@@ -17,7 +17,7 @@ def get_df_from_datastore_path(datastore, datastore_path):
     # but these may be daily data dumps
     datastore_path = [(datastore, datastore_path)]
     dataset = Dataset.Tabular.from_delimited_files(
-        path=X_train_datastore
+        path=datastore_path
     )
     df = dataset.to_pandas_dataframe()
     return df
