@@ -26,3 +26,5 @@ class AMLInterface:
             account_key=storage_acct_key
         )
     
+    def register_aml_environment(self, environment):
+        environment.register(workspace=self.ws)
