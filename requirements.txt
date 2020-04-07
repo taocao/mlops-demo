@@ -1,6 +1,6 @@
-azureml-sdk
-azure-blob-storage
-azure-identity
-azure-keyvault
+azureml-sdk==1.2.0
+azure-storage-blob==12.3.0
+pandas==1.0.3
+sklearn==0.22.2
 
--e my_custom_package
+-e src
