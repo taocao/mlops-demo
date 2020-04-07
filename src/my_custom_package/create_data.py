@@ -90,10 +90,12 @@ def main():
     resource_group = os.environ['RESOURCE_GROUP']
     subscription_id = os.environ['SUBSCRIPTION_ID']
 
-    # Create and Upload data to Blob Store
+    # Instantiate Blob Storage Interface
     blob_storage_interface = BlobStorageInterface(
         storage_acct_name, storage_acct_key
     )
+    
+    # Create and Upload data to Blob Store
     data_creator = CreateClassificationData()
     data_creator.upload_data(blob_storage_interface)
 
