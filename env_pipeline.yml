@@ -33,7 +33,7 @@ jobs:
     
       - script: |
           python src/my_custom_package/create_aml_env.py
-        displayName: 'Create and Register Data'
+        displayName: 'Create and Register Environment'
         env:
           TENANT_ID: $(TenantID)
           SPN_ID: $(SpnID)
