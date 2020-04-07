@@ -2,3 +2,5 @@ TRAINING_CONTAINER = 'train'
 SCORING_CONTAINER = 'score'
 
 TRAINING_DATASTORE = 'train'
+
+AML_ENV_NAME = 'my_aml_env'
