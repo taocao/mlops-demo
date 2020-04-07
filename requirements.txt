@@ -1,0 +1,6 @@
+azureml-sdk
+azure-blob-storage
+azure-identity
+azure-keyvault
+
+-e my_custom_package
