@@ -4,9 +4,9 @@ trigger:
         - 'master'
         - 'releases/*'
 
-name: 'Data Pipeline'
+name: 'data_pipeline'
 jobs:
-  - job: 'Data Pipeline Job'
+  - job: 'data_pipeline_job'
     pool:
       vmImage: 'ubuntu-16.04'
     variables:
