@@ -1,2 +1,2 @@
 def remove_collinear_cols(X_data):
-    return X_data.drop([3, 8], axis=1)
+    return X_data.drop(['D', 'I'], axis=1)

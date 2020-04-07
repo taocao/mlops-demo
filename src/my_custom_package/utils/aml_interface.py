@@ -31,7 +31,7 @@ class AMLInterface:
     def register_aml_environment(self, environment):
         environment.register(workspace=self.ws)
     
-    def get_compute_target(self, compute_name, vm_size, max_nodes):
+    def get_compute_target(self, compute_name, vm_size):
         try:
             compute_target = ComputeTarget(
                 workspace=self.ws,

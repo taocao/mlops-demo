@@ -39,6 +39,7 @@ def create_aml_environment(aml_interface):
     )
     conda_dep.add_pip_package(whl_url)
     aml_env.python.conda_dependencies = conda_dep
+    aml_env.docker.enabled = True
     return aml_env
 
 

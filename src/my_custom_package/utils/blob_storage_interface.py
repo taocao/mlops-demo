@@ -24,15 +24,16 @@ class BlobStorageInterface:
             
     def upload_df_to_blob(self, df, container_name, remote_path):
         self.create_container(container_name)
-        buffer = BytesIO()
-        buffer.write(df.to_csv(index=False, header=True).encode())
-        buffer.seek(0)
         blob_client = self.blob_service_client.get_blob_client(
             container=container_name,
             blob=remote_path
         )
         try:
-            blob_client.upload_blob(buffer)
+            blob_client.upload_blob(
+                df.to_csv(index=False, header=True).encode()
+            )
         except ResourceExistsError:
             blob_client.delete_blob()
-            blob_client.upload_blob(buffer)
+            blob_client.upload_blob(
+                df.to_csv(index=False, header=True).encode()
+            )

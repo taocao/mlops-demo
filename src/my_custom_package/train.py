@@ -72,3 +72,7 @@ def main():
     evaluate_model(classifier, X_test, y_test, run)
     model_path = save_model(classifier)
     register_model(run, model_path)
+
+
+if __name__ == '__main__':
+    main()

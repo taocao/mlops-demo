@@ -1,6 +1,6 @@
 import os
 
-from azureml.core import ScriptRunConfig, Experiment
+from azureml.core import ScriptRunConfig, Experiment, Environment
 
 from my_custom_package.utils.aml_interface import AMLInterface
 from my_custom_package.utils.const import (
@@ -10,15 +10,23 @@ from my_custom_package.utils.const import (
 __here__ = os.path.dirname(__file__)
 
 
-def submit_run(workspace):
-    experiment = Experiment(workspace, AML_EXPERIMENT_NAME)
+def submit_run(aml_interface):
+    experiment = Experiment(aml_interface.ws, AML_EXPERIMENT_NAME)
     src_dir = __here__
     run_config = ScriptRunConfig(
         source_directory=src_dir,
         script='train.py'
     )
-    run_config.run_config.target = AML_COMPUTE_NAME
-    run_config.run_config.environment = AML_ENV_NAME
+    run_config.run_config.target = aml_interface.get_compute_target(
+        AML_COMPUTE_NAME,
+        'STANDARD_D2_V2'
+    )
+    aml_run_env = Environment.get(
+        aml_interface.ws,
+        AML_ENV_NAME
+    )
+    run_config.run_config.environment = aml_run_env
+    print("Submitting Run")
     run = experiment.submit(config=run_config)
     run.wait_for_completion(show_output=True)
     print(run.get_metrics())
@@ -37,5 +45,9 @@ def main():
         tenant_id, spn_id, spn_password, subscription_id,
         workspace_name, resource_group
     )
-    submit_run(aml_interface.ws)
+    submit_run(aml_interface)
+
+
+if __name__ == '__main__':
+    main()
     

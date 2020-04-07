@@ -65,12 +65,12 @@ class CreateClassificationData():
         blob_storage_interface.upload_df_to_blob(
             self.X_valid,
             SCORING_CONTAINER,
-            'test/X_valid.csv'
+            'X_valid.csv'
         )
         blob_storage_interface.upload_df_to_blob(
             self.y_valid,
             SCORING_CONTAINER,
-            'test/y_valid.csv'
+            'y_valid.csv'
         )
 
     def upload_data(self, blob_storage_interface):
