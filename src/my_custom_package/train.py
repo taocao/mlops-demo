@@ -39,7 +39,7 @@ def prepare_data(ws):
 def train_model(X_train, y_train):
     classifier = LogisticRegression()
     classifier.fit(X_train, y_train)
-    return classifer
+    return classifier
 
 
 def evaluate_model(classifier, X_test, y_test, run):
