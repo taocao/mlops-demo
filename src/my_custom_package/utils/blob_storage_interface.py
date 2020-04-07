@@ -22,7 +22,7 @@ class BlobStorageInterface:
         except ResourceExistsError:
             pass
             
-    def upload_df_to_azure_blob(self, df, container_name, remote_path):
+    def upload_df_to_blob(self, df, container_name, remote_path):
         self.create_container(container_name)
         buffer = BytesIO()
         buffer.write(df.to_csv(index=False, header=True).encode())
