@@ -38,7 +38,7 @@ def deploy_service(aml_interface):
         [model],
         inference_config,
         deployment_config)
-    service.wait_for_deployment(show_output = True)
+    service.wait_for_deployment(show_output=True)
     print(service.scoring_uri)
 
 
