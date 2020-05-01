@@ -137,3 +137,9 @@ dmypy.json
 
 # Cython debug symbols
 cython_debug/
+
+# Pytest and coverage outputs
+*-testresults.xml
+coverage.xml
+htmlcov/
+reports/*

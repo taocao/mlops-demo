@@ -1,0 +1,49 @@
+pr:
+  branches:
+    include:
+      - 'master'
+  
+name: 'ci_pipeline'
+jobs:
+- job: 'ci_pipeline_job'
+  pool:
+    vmImage: 'Ubuntu-16.04'
+
+  steps:
+  - task: UsePythonVersion@0
+    inputs:
+      versionSpec: '$(python.version)'
+      architecture: 'x64'
+
+  - script: |
+      python -m pip install --upgrade pip
+      pip install pytest mock codecov pydocstyle pytest-cov pylint pylint_junit
+    displayName: 'Install testing dependencies'
+  
+  - script: |
+      pip install -r requirements.txt
+    displayName: 'Install project requirements'
+
+  - script: |
+      pytest -v src/my_custom_package/test/ --doctest-modules --junitxml=unit-testresults.xml --cov=src/my_custom_package/ --cov-append --cov-report=xml:coverage.xml --cov-report=html:htmlcov
+    displayName: 'Run all unit tests'
+  
+  - script: |      
+      pylint --output-format=pylint_junit.JUnitReporter src/my_custom_package/ > linting-testresults.xml
+    displayName: 'Run code quality tests (Pylint)'
+  
+  - task: PublishTestResults@2
+    inputs:
+      testResultsFormat: 'JUnit'
+      testResultsFiles: '**/*-testresults.xml'
+      testRunTitle: '$(Agent.OS) - $(Build.BuildNumber)[$(Agent.JobName)] - Python $(python.version) - Linting and Unit Test results'
+    condition: succeededOrFailed()
+    displayName: 'Publish unit test results'
+  
+  - task: PublishCodeCoverageResults@1
+    inputs:
+      codeCoverageTool: Cobertura
+      summaryFileLocation: 'coverage.xml'
+      reportDirectory: 'htmlcov'
+    displayName: 'Publish Coverage Results'
+  
