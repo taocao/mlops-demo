@@ -7,10 +7,8 @@ from my_custom_package.utils.aml_interface import AMLInterface
 from my_custom_package.utils.const import AML_ENV_NAME
 
 
-__here__ = os.path.dirname(__file__)
-
-
 def retrieve_whl_filepath():
+    __here__ = os.path.dirname(__file__)
     dist_dir = os.path.join(__here__, '..', 'dist')
     if not os.path.isdir(dist_dir):
         raise FileNotFoundError("Couldn't find dist directory")
