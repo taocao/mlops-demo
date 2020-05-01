@@ -28,5 +28,3 @@ class TestSubmitRun(TestCase):
         self.assertEqual(exp_config.script, 'train.py')
         mock_run.wait_for_completion.assert_called_once_with(show_output=True)
         mock_run.get_metrics.assert_called_once()
-
-
