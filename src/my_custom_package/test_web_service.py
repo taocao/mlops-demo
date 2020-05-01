@@ -1,8 +1,8 @@
 import json
 import os
-import requests
 
 import numpy as np
+import requests
 from azureml.core.webservice import Webservice
 from sklearn.metrics import f1_score
 
