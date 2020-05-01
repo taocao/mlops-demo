@@ -85,6 +85,8 @@ class TestCreateAMLEnvironment(TestCase):
     def test_create_aml_environment(self, mock_env,
                                     mock_retrieve_whl_filepath):
         mock_retrieve_whl_filepath.return_value = self.whl_filepath
+        # We are not testing Azure ML SDK functionality in a unit test
+        # Rather that the correct calls are made so use mock objects
         mock_env_obj = Mock()
         mock_env.return_value = mock_env_obj
         # Some valid pip file for testing purposes
