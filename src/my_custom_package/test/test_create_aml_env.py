@@ -56,8 +56,7 @@ class TestRetrieveWhlFilepath(TestCase):
         if not os.path.exists(self.test_dist_dir):
             os.makedirs(self.test_dist_dir)
         # Create empty file
-        with open(self.whl_filepath, 'w') as f:
-            pass
+        open(self.whl_filepath, 'w').close()
         
         filepath = retrieve_whl_filepath()
         self.assertIsInstance(filepath, str)
@@ -79,8 +78,7 @@ class TestCreateAMLEnvironment(TestCase):
             whl_filename
         )
         # Create empty file
-        with open(self.whl_filepath, 'w') as f:
-            pass 
+        open(self.whl_filepath, 'w').close()
 
     @patch('my_custom_package.create_aml_env.retrieve_whl_filepath')
     @patch('my_custom_package.create_aml_env.Environment')
