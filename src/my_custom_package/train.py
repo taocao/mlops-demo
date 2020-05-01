@@ -50,7 +50,7 @@ def evaluate_model(classifier, X_test, y_test, run):
 
 def save_model(classifer):
     output_dir = os.path.join(__here__, 'outputs')
-    os.makedirs('outputs', exist_ok=True)
+    os.makedirs(output_dir, exist_ok=True)
     model_path = os.path.join(output_dir, 'model.pkl')
     joblib.dump(classifer, model_path)
     return model_path

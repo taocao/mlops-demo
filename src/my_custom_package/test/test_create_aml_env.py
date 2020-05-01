@@ -108,4 +108,4 @@ class TestCreateAMLEnvironment(TestCase):
         self.assertTrue(mock_env_obj.docker.enabled)
 
     def tearDown(self):
-        shutil.rmtree(self.test_dist_dir)
+        shutil.rmtree(self.test_dist_dir, outputs_dir)
