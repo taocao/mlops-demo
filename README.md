@@ -9,3 +9,4 @@ The full series of posts can be found here:
 - [Part 4 - Environment Pipeline](https://benalexkeen.com/creating-end-to-end-mlops-pipelines-using-azure-ml-and-azure-pipelines-part-4/)
 - [Part 5 - Model Training Pipeline](https://benalexkeen.com/creating-end-to-end-mlops-pipelines-using-azure-ml-and-azure-pipelines-part-5/)
 - [Part 6 - Model Deployment Pipeline](https://benalexkeen.com/creating-end-to-end-mlops-pipelines-using-azure-ml-and-azure-pipelines-part-6/)
+- [Part 7 - Continuous Integration Pipeline](https://benalexkeen.com/creating-end-to-end-mlops-pipelines-using-azure-ml-and-azure-pipelines-part-7/)
