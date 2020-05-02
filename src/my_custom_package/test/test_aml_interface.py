@@ -21,10 +21,13 @@ class TestAMLInterface(TestCase):
     @patch(f'{test_module}.Workspace')
     def setUp(self, mock_Workspace, mock_ServicePrincipalAuthentication):
         mock_Workspace.return_value = 'test_workspace'
+        spn_credentials = {
+            'tenant_id': 'test_tenant_id',
+            'service_principal_id': 'test_spn_id',
+            'service_principal_password': 'test_spn_password',
+        }
         self.aml_interface = AMLInterface(
-            tenant_id='test_tenant_id',
-            spn_id='test_spn_id',
-            spn_password='test_spn_password',
+            spn_credentials=spn_credentials,
             subscription_id='test_subscription_id',
             workspace_name='test_workspace_name',
             resource_group='test_resource_group'

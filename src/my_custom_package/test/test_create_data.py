@@ -10,29 +10,29 @@ class TestCreateClassificationData(TestCase):
     def test_init(self):
         # Run init
         data_creator_obj = CreateClassificationData()
-        self.assertIsInstance(data_creator_obj.X_train, pd.DataFrame)
-        self.assertIsInstance(data_creator_obj.X_test, pd.DataFrame)
-        self.assertIsInstance(data_creator_obj.X_valid, pd.DataFrame)
+        self.assertIsInstance(data_creator_obj.x_train, pd.DataFrame)
+        self.assertIsInstance(data_creator_obj.x_test, pd.DataFrame)
+        self.assertIsInstance(data_creator_obj.x_valid, pd.DataFrame)
         self.assertIsInstance(data_creator_obj.y_train, pd.DataFrame)
         self.assertIsInstance(data_creator_obj.y_test, pd.DataFrame)
         self.assertIsInstance(data_creator_obj.y_valid, pd.DataFrame)
 
         # Train data is 3500 rows
         # X data is 10 columns, y data is 1 column
-        self.assertEqual(len(data_creator_obj.X_train), 3500)
-        self.assertEqual(len(data_creator_obj.X_train.columns), 10)
+        self.assertEqual(len(data_creator_obj.x_train), 3500)
+        self.assertEqual(len(data_creator_obj.x_train.columns), 10)
         self.assertEqual(len(data_creator_obj.y_train), 3500)
         self.assertEqual(len(data_creator_obj.y_train.columns), 1)
 
         # Test data is 750 rows
-        self.assertEqual(len(data_creator_obj.X_test), 750)
-        self.assertEqual(len(data_creator_obj.X_test.columns), 10)
+        self.assertEqual(len(data_creator_obj.x_test), 750)
+        self.assertEqual(len(data_creator_obj.x_test.columns), 10)
         self.assertEqual(len(data_creator_obj.y_test), 750)
         self.assertEqual(len(data_creator_obj.y_test.columns), 1)
         
         # Validation data is 750 rows
-        self.assertEqual(len(data_creator_obj.X_valid), 750)
-        self.assertEqual(len(data_creator_obj.X_valid.columns), 10)
+        self.assertEqual(len(data_creator_obj.x_valid), 750)
+        self.assertEqual(len(data_creator_obj.x_valid.columns), 10)
         self.assertEqual(len(data_creator_obj.y_valid), 750)
         self.assertEqual(len(data_creator_obj.y_valid.columns), 1)
     

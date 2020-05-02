@@ -23,7 +23,7 @@ def retrieve_whl_filepath():
         if f.startswith('my_custom_package')
         and f.endswith('whl')
     ]
-    if not len(whl_file):
+    if not whl_file:
         raise FileNotFoundError("Couldn't find wheel file")
     return os.path.join(dist_dir, whl_file[0])
 
@@ -49,16 +49,18 @@ def create_aml_environment(aml_interface):
 
 def main():
     # Retrieve vars from env
-    tenant_id = os.environ['TENANT_ID']
-    spn_id = os.environ['SPN_ID']
-    spn_password = os.environ['SPN_PASSWORD']
     workspace_name = os.environ['AML_WORKSPACE_NAME']
     resource_group = os.environ['RESOURCE_GROUP']
     subscription_id = os.environ['SUBSCRIPTION_ID']
 
+    spn_credentials = {
+        'tenant_id': os.environ['TENANT_ID'],
+        'service_principal_id': os.environ['SPN_ID'],
+        'service_principal_password': os.environ['SPN_PASSWORD'],
+    }
+
     aml_interface = AMLInterface(
-        tenant_id, spn_id, spn_password, subscription_id,
-        workspace_name, resource_group
+        spn_credentials, subscription_id, workspace_name, resource_group
     )
     aml_env = create_aml_environment(aml_interface)
     aml_interface.register_aml_environment(aml_env)

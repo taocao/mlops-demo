@@ -19,31 +19,31 @@ def get_df_from_datastore_path(datastore, datastore_path):
     dataset = Dataset.Tabular.from_delimited_files(
         path=datastore_path
     )
-    df = dataset.to_pandas_dataframe()
-    return df
+    dataframe = dataset.to_pandas_dataframe()
+    return dataframe
 
 
-def prepare_data(ws):
-    datastore = Datastore.get(ws, TRAINING_DATASTORE)
-    X_train = get_df_from_datastore_path(datastore, 'train/X_train.csv')
+def prepare_data(workspace):
+    datastore = Datastore.get(workspace, TRAINING_DATASTORE)
+    x_train = get_df_from_datastore_path(datastore, 'train/X_train.csv')
     y_train = get_df_from_datastore_path(datastore, 'train/y_train.csv')
     y_train = y_train['Target']
-    X_test = get_df_from_datastore_path(datastore, 'test/X_test.csv')
+    x_test = get_df_from_datastore_path(datastore, 'test/X_test.csv')
     y_test = get_df_from_datastore_path(datastore, 'test/y_test.csv')
     y_test = y_test['Target']
-    X_train = remove_collinear_cols(X_train)
-    X_test = remove_collinear_cols(X_test)
-    return X_train, y_train, X_test, y_test
+    x_train = remove_collinear_cols(x_train)
+    x_test = remove_collinear_cols(x_test)
+    return x_train, y_train, x_test, y_test
 
 
-def train_model(X_train, y_train):
+def train_model(x_train, y_train):
     classifier = LogisticRegression()
-    classifier.fit(X_train, y_train)
+    classifier.fit(x_train, y_train)
     return classifier
 
 
-def evaluate_model(classifier, X_test, y_test, run):
-    y_pred = classifier.predict(X_test)
+def evaluate_model(classifier, x_test, y_test, run):
+    y_pred = classifier.predict(x_test)
     model_f1_score = f1_score(y_test, y_pred)
     run.log('F1_Score', model_f1_score)
 
@@ -67,10 +67,10 @@ def register_model(run, model_path):
 
 def main():
     run = Run.get_context()
-    ws = run.experiment.workspace
-    X_train, y_train, X_test, y_test = prepare_data(ws)
-    classifier = train_model(X_train, y_train)
-    evaluate_model(classifier, X_test, y_test, run)
+    workspace = run.experiment.workspace
+    x_train, y_train, x_test, y_test = prepare_data(workspace)
+    classifier = train_model(x_train, y_train)
+    evaluate_model(classifier, x_test, y_test, run)
     model_path = save_model(classifier)
     register_model(run, model_path)
 
