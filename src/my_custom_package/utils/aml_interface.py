@@ -21,9 +21,9 @@ class AMLInterface:
     def register_datastore(self, datastore_name, blob_container,
                            storage_acct_name, storage_acct_key):
         Datastore.register_azure_blob_container(
-            workspace=self.ws, 
-            datastore_name=datastore_name, 
-            container_name=blob_container, 
+            workspace=self.ws,
+            datastore_name=datastore_name,
+            container_name=blob_container,
             account_name=storage_acct_name,
             account_key=storage_acct_key
         )
@@ -31,7 +31,7 @@ class AMLInterface:
     def register_aml_environment(self, environment):
         environment.register(workspace=self.ws)
     
-    def get_compute_target(self, compute_name, vm_size):
+    def get_compute_target(self, compute_name, vm_size=None):
         try:
             compute_target = ComputeTarget(
                 workspace=self.ws,
@@ -41,7 +41,7 @@ class AMLInterface:
         except ComputeTargetException:
             print('Creating a new compute target...')
             compute_config = AmlCompute.provisioning_configuration(
-                vm_size='STANDARD_D2_V2',
+                vm_size=vm_size,
                 min_nodes=1,
                 max_nodes=2
             )
