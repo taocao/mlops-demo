@@ -1,8 +1,8 @@
 import json
 import os
-import requests
 
 import numpy as np
+import requests
 from azureml.core.webservice import Webservice
 from sklearn.metrics import f1_score
 
@@ -18,7 +18,7 @@ def get_validation_data(storage_acct_name, storage_acct_key):
         storage_acct_name,
         storage_acct_key
     )
-    X_valid = blob_storage_interface.download_blob_to_df(
+    x_valid = blob_storage_interface.download_blob_to_df(
         container_name=SCORING_CONTAINER,
         remote_path='X_valid.csv'
     )
@@ -26,7 +26,7 @@ def get_validation_data(storage_acct_name, storage_acct_key):
         container_name=SCORING_CONTAINER,
         remote_path='y_valid.csv'
     )
-    return X_valid, y_valid
+    return x_valid, y_valid
 
 
 def get_web_service_uri(aml_interface):
@@ -37,8 +37,8 @@ def get_web_service_uri(aml_interface):
     return service.scoring_uri
 
 
-def make_predictions(df, scoring_uri):
-    data = json.dumps({'data': df.values.tolist()})
+def make_predictions(x_df, scoring_uri):
+    data = json.dumps({'data': x_df.values.tolist()})
     headers = {'Content-Type': 'application/json'}
     response = requests.post(scoring_uri, data=data, headers=headers)
     return np.array(response.json())
@@ -52,21 +52,27 @@ def score_predictions(y_valid, y_pred):
 def main():
     storage_acct_name = os.environ['STORAGE_ACCT_NAME']
     storage_acct_key = os.environ['STORAGE_ACCT_KEY']
-    tenant_id = os.environ['TENANT_ID']
-    spn_id = os.environ['SPN_ID']
-    spn_password = os.environ['SPN_PASSWORD']
     workspace_name = os.environ['AML_WORKSPACE_NAME']
     resource_group = os.environ['RESOURCE_GROUP']
     subscription_id = os.environ['SUBSCRIPTION_ID']
-    X_valid, y_valid = get_validation_data(storage_acct_name, storage_acct_key)
-    X_valid = remove_collinear_cols(X_valid)
+
+    spn_credentials = {
+        'tenant_id': os.environ['TENANT_ID'],
+        'service_principal_id': os.environ['SPN_ID'],
+        'service_principal_password': os.environ['SPN_PASSWORD'],
+    }
+
+    aml_interface = AMLInterface(
+        spn_credentials, subscription_id, workspace_name, resource_group
+    )
+    x_valid, y_valid = get_validation_data(storage_acct_name, storage_acct_key)
+    x_valid = remove_collinear_cols(x_valid)
     y_valid = y_valid['Target']
     aml_interface = AMLInterface(
-        tenant_id, spn_id, spn_password, subscription_id,
-        workspace_name, resource_group
+        spn_credentials, subscription_id, workspace_name, resource_group
     )
     scoring_uri = get_web_service_uri(aml_interface)
-    y_pred = make_predictions(X_valid, scoring_uri)
+    y_pred = make_predictions(x_valid, scoring_uri)
     score_predictions(y_valid, y_pred)
 
 
