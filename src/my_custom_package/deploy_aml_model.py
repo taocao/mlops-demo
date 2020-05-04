@@ -14,7 +14,7 @@ __here__ = os.path.dirname(__file__)
 
 def get_inference_config(aml_interface):
     aml_env = Environment.get(
-        workspace=aml_interface.ws,
+        workspace=aml_interface.workspace,
         name=AML_ENV_NAME
     )
     scoring_script_path = os.path.join(__here__, 'score.py')
@@ -31,9 +31,9 @@ def deploy_service(aml_interface):
         cpu_cores=1,
         memory_gb=1
     )
-    model = aml_interface.ws.models.get(MODEL_NAME)
+    model = aml_interface.workspace.models.get(MODEL_NAME)
     service = Model.deploy(
-        aml_interface.ws,
+        aml_interface.workspace,
         DEPLOYMENT_SERVICE_NAME,
         [model],
         inference_config,
@@ -46,9 +46,9 @@ def update_service(aml_interface):
     inference_config = get_inference_config(aml_interface)
     service = Webservice(
         name=DEPLOYMENT_SERVICE_NAME,
-        workspace=aml_interface.ws
+        workspace=aml_interface.workspace
     )
-    model = aml_interface.ws.models.get(MODEL_NAME)
+    model = aml_interface.workspace.models.get(MODEL_NAME)
     service.update(models=[model], inference_config=inference_config)
     print(service.state)
     print(service.scoring_uri)
@@ -69,7 +69,8 @@ def main():
     aml_interface = AMLInterface(
         spn_credentials, subscription_id, workspace_name, resource_group
     )
-    if DEPLOYMENT_SERVICE_NAME not in aml_interface.ws.webservices.keys():
+    webservices = aml_interface.workspace.webservices.keys()
+    if DEPLOYMENT_SERVICE_NAME not in webservices:
         deploy_service(aml_interface)
     else:
         update_service(aml_interface)

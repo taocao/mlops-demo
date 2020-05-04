@@ -32,7 +32,7 @@ def get_validation_data(storage_acct_name, storage_acct_key):
 def get_web_service_uri(aml_interface):
     service = Webservice(
         name=DEPLOYMENT_SERVICE_NAME,
-        workspace=aml_interface.ws
+        workspace=aml_interface.workspace
     )
     return service.scoring_uri
 

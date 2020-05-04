@@ -11,7 +11,7 @@ __here__ = os.path.dirname(__file__)
 
 
 def submit_run(aml_interface):
-    experiment = Experiment(aml_interface.ws, AML_EXPERIMENT_NAME)
+    experiment = Experiment(aml_interface.workspace, AML_EXPERIMENT_NAME)
     src_dir = __here__
     run_config = ScriptRunConfig(
         source_directory=src_dir,
@@ -22,7 +22,7 @@ def submit_run(aml_interface):
         'STANDARD_D2_V2'
     )
     aml_run_env = Environment.get(
-        aml_interface.ws,
+        aml_interface.workspace,
         AML_ENV_NAME
     )
     run_config.run_config.environment = aml_run_env

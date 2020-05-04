@@ -46,7 +46,7 @@ def test_deploy_service(mock_get_inference_config, mock_AciWebservice,
 def test_update_service(mock_get_inference_config, mock_Webservice):
     mock_aml_interface = Mock()
     mock_get_inference_config.return_value = 'test_inference_config'
-    mock_aml_interface.ws.models.get.return_value = 'test_model_name'
+    mock_aml_interface.workspace.models.get.return_value = 'test_model_name'
     mock_service = Mock()
     mock_Webservice.return_value = mock_service
     
