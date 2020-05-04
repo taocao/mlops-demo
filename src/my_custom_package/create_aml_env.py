@@ -37,7 +37,7 @@ def create_aml_environment(aml_interface):
     conda_dep.add_pip_package("joblib==0.14.1")
     whl_filepath = retrieve_whl_filepath()
     whl_url = Environment.add_private_pip_wheel(
-        workspace=aml_interface.ws,
+        workspace=aml_interface.workspace,
         file_path=whl_filepath,
         exist_ok=True
     )
