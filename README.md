@@ -1,6 +1,6 @@
 # Creating End-to-End MLOps pipelines using Azure ML and Azure Pipelines
 
-This is the git repository that accompanies the 6-part series of post creating a minimal, repeatable MLOps Pipeline found at [benalexkeen.com](https://benalexkeen.com/creating-end-to-end-mlops-pipelines-using-azure-ml-and-azure-pipelines-part-1/).
+This is the git repository that accompanies the 7-part series of post creating a minimal, repeatable MLOps Pipeline found at [benalexkeen.com](https://benalexkeen.com/creating-end-to-end-mlops-pipelines-using-azure-ml-and-azure-pipelines-part-1/).
 
 The full series of posts can be found here:
 - [Part 1 - Introduction](https://benalexkeen.com/creating-end-to-end-mlops-pipelines-using-azure-ml-and-azure-pipelines-part-1/)
