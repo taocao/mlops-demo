@@ -7,7 +7,7 @@ name: 'ci_pipeline'
 jobs:
 - job: 'ci_pipeline_job'
   pool:
-    vmImage: 'Ubuntu-16.04'
+    vmImage: 'Ubuntu-latest'
 
   steps:
   - task: UsePythonVersion@0
